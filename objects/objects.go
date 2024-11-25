@@ -8,9 +8,11 @@ import (
 	"strings"
 )
 
-var BASIC_FILE_URL, _ = os.Getwd()
+const BASIC_FILE_URL = "./testfiles/"
 
 func ObjectHandle(w http.ResponseWriter, r *http.Request) {
+
+	log.Println(r.Method + r.URL.EscapedPath())
 
 	switch r.Method {
 	//Get Method
@@ -27,12 +29,11 @@ func ObjectHandle(w http.ResponseWriter, r *http.Request) {
 
 func saveObjects(w http.ResponseWriter, r *http.Request) {
 
-	log.Default().Panicln(r.URL.EscapedPath())
-	filename := BASIC_FILE_URL + "/files/" + strings.Split(r.URL.EscapedPath(), "/")[2]
+	filename := BASIC_FILE_URL + strings.Split(r.URL.EscapedPath(), "/")[2]
 
 	f, err := os.Create(filename)
 	if err != nil {
-		log.Default().Println(err)
+		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -43,12 +44,12 @@ func saveObjects(w http.ResponseWriter, r *http.Request) {
 
 func getObjects(w http.ResponseWriter, r *http.Request) {
 
-	log.Default().Println(r.URL.EscapedPath())
-	filename := BASIC_FILE_URL + "/files/" + strings.Split(r.URL.EscapedPath(), "/")[2]
+	filename := BASIC_FILE_URL + strings.Split(r.URL.EscapedPath(), "/")[2]
 
 	f, err := os.Open(filename)
 	if err != nil {
-		log.Default().Println(err)
+		log.Println(err)
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	defer f.Close()

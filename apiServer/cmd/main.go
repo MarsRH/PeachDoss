@@ -1,8 +1,11 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/MarsRH/PeachDoss/apiServer/heartbeat"
 	"github.com/MarsRH/PeachDoss/apiServer/locate"
@@ -11,6 +14,10 @@ import (
 )
 
 func main() {
+	err := godotenv.Load(".apiServer.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	// 监听数据服务节点心跳
 	go heartbeat.ListenHeartbeat()
 	// 处理对象请求，实际上是将对象请求转发给数据服务

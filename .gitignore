@@ -23,6 +23,7 @@ go.work.sum
 
 # env file
 .env
+*.env
 
 # Test file dir
 testfiles/

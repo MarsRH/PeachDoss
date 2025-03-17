@@ -27,6 +27,7 @@ go.work.sum
 
 # Test file dir
 testfiles/
+test/
 
 # System configuration
 sys/sys.go

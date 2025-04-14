@@ -31,3 +31,6 @@ test/
 
 # System configuration
 sys/sys.go
+
+# pid records
+server_pids.txt

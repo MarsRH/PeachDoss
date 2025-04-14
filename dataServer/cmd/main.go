@@ -1,8 +1,11 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/MarsRH/PeachDoss/dataServer/heartbeat"
 	"github.com/MarsRH/PeachDoss/dataServer/locate"
@@ -11,6 +14,10 @@ import (
 )
 
 func main() {
+	err := godotenv.Load(".dataServer.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 	// 向 apiServers exchange 发送心跳
 	go heartbeat.StartHeartbeat()
 	// 监听定位信息

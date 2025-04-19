@@ -2,6 +2,7 @@ package locate
 
 import (
 	"log"
+	"net/url"
 	"os"
 	"strconv"
 
@@ -32,8 +33,8 @@ func StartLocate() {
 		if e != nil {
 			log.Fatalln(e)
 		}
-		// 存储根目录拼接文件名，定位存储对象
-		if Locate(os.Getenv(sys.StorageRoot) + obj) {
+		// 存储根目录拼接文件名，定位存储对象，名字需要 URL 转义
+		if Locate(os.Getenv(sys.StorageRoot) + url.PathEscape(obj)) {
 			// 如果存储对象存在，则回送本节点监听地址，已告知存储对象在该节点
 			q.Send(msg.ReplyTo, os.Getenv(sys.ListenAddress))
 		}
